@@ -33,11 +33,11 @@ foreach ($OU in $OUS) { #Запускаем их в цикл, для обраб�
                     #Работаем с рабочим столом
                     $FOLDERSINDESKTOP = (Get-ChildItem $DESKTOPPATH -Recurse -Directory | Where-Object {$_.LastWriteTime -lt ((Get-Date).AddDays(-21))} | Measure-Object).Count #Папки
                     $FILESINDESKTOP = Get-ChildItem $DESKTOPPATH -Recurse -File | Where-Object {$_.LastWriteTime -lt ((Get-Date).AddDays(-21))} #Файлы
-                    $FILEINDESKTOPCOUNT = ($FILEINDESKTOP | Measure-Object).Count #Количество файлов
-                    $FILEINDESKTOPSIZE = ($FILEINDESKTOP | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum /1MB #Размер файлов
-                    $FILEINDESKTOPSIZE_ROUND = [math]::Round($FILEINDESKTOPSIZE, 1) #Округляем
+                    $FILESINDESKTOPCOUNT = ($FILESINDESKTOP | Measure-Object).Count #Количество файлов
+                    $FILESINDESKTOPSIZE = ($FILESINDESKTOP | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum /1MB #Размер файлов
+                    $FILESINDESKTOPSIZE_ROUND = [math]::Round($FILESINDESKTOPSIZE, 1) #Округляем
                     #Добавляем строку со всей этой инфой в целевой файл:
-                    $COMP.Name + ';' + $PROFUSERNAME + ';' + $FOLDERSINDOCS + ';' + $FILEINDOCSCOUNT + ';' + $FILEINDOCSSIZE_ROUND + ';' + $FOLDERSINDESKTOP + ';' + $FILEINDESKTOPCOUNT + ';' + $FILEINDESKTOPSIZE_ROUND | Out-File $OUTFILE -Append utf8;
+                    $COMP.Name + ';' + $PROFUSERNAME + ';' + $FOLDERSINDOCS + ';' + $FILEINDOCSCOUNT + ';' + $FILEINDOCSSIZE_ROUND + ';' + $FOLDERSINDESKTOP + ';' + $FILESINDESKTOPCOUNT + ';' + $FILESINDESKTOPSIZE_ROUND | Out-File $OUTFILE -Append utf8;
                     $COMP.Name.ToString() | Out-File $SuccesFile -Append utf8; #Добавляем имя обработанного компьютера в контрольный файл
                 }
             }
